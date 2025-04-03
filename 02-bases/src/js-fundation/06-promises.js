@@ -1,11 +1,8 @@
-const getPokemonById = (id) => {
+const { http } = require("./../plugins/http-client.plugin");
+const getPokemonById = async (id) => {
   const url = `https://pokeapi.co/api/v2/ability/${id}`;
-
-  fetch(url).then((response) => {
-    response.json().then((response) => {
-      console.log(response.name);
-    });
-  });
+  const { data } = await http.get(url);
+  return data;
 };
 
 module.exports = getPokemonById;

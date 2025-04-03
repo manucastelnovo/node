@@ -1,7 +1,7 @@
 // const templateExports = require('./js-fundation/01-template')
 // require('./js-fundation/02-destructiring')
-// const { getUserById } = require('./js-fundation/03-callbacks')
-
+// const { getUserById } = require("./js-fundation/03-callbacks");
+const getPokemonById = require("./js-fundation/06-promises");
 // // console.log(templateExports.emailTemplate)
 
 // getUserById(1, function(error, user){
@@ -11,6 +11,6 @@
 //     console.log(user)
 
 // })
-const getPokemonById = require("./js-fundation/06-promises");
-
-console.log(getPokemonById(34));
+getPokemonById(34).then((resp) => {
+  console.log(resp.name);
+});

@@ -13,4 +13,23 @@ const buildMakePerson = ({ getUUID, getAge }) => {
   };
 };
 
+const buildHttpClient = ({ httpApi }) => {
+  return ({ header }) => {
+    return {
+      get: async (url) => {
+        return await axios.get(url);
+      },
+      post: async (url, body) => {
+        return await axios.post(url, body);
+      },
+      put: async (url, body) => {
+        return await axios.put(url, body);
+      },
+      delete: async (url) => {
+        return await axios.delete(url);
+      },
+    };
+  };
+};
+
 const john = buildPerson(obj);

@@ -1,13 +1,32 @@
-const httpClientPlugin = {
-  get: async (url) => {
-    const resp = await fetch(url);
-    return await resp.json();
-  },
-  post: async (url, body) => {},
-  put: async (url, body) => {},
-  delete: async (url) => {},
+const axios = require("axios");
+
+const buildMakeHttpClient = ({ httpApi }) => {
+  return ({ header }) => {
+    return {
+      get: async (url) => {
+        return await httpApi.get({ url, header });
+      },
+      post: async (url, body) => {
+        return await httpApi.post({ url, data: body, header });
+      },
+      put: async (url, body) => {
+        return await httpApi.put({ url, body, header });
+      },
+      delete: async (url) => {
+        return await httpApi.delete({ url, header });
+      },
+    };
+  };
 };
+const makeHttpClient = buildMakeHttpClient(axios);
+const httpClienWithAuth = makeHttpClient({
+  header: { Authorization: `bearer ${process.env.TOKEN}` },
+});
+const httpClientWithOutAuth = makeHttpClient({
+  header: { "Content-type": "Application/json" },
+});
 
 module.exports = {
-  http: httpClientPlugin,
+  http: httpClienWithAuth,
+  httpWithAuth: httpClientWithOutAuth,
 };
